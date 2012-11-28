@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/52/trunk/sock4a
+END
+client.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/52/trunk/sock4a/client.cpp
+END
+fmacros.h
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/48/trunk/sock4a/fmacros.h
+END
+server.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/48/trunk/sock4a/server.cpp
+END
+lib.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/48/trunk/sock4a/lib.cpp
+END
+anet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/48/trunk/sock4a/anet.cpp
+END
+lib.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/48/trunk/sock4a/lib.h
+END
+anet.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/48/trunk/sock4a/anet.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/48/trunk/sock4a/Makefile
+END
