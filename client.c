@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
 
     if (protocol4a) {
         /* If SOCKS4a, set special invalid IP address 0.0.0.x */
-        socksreq[4] = (unsigned char)ip[0];
-        socksreq[5] = (unsigned char)ip[1];
-        socksreq[6] = (unsigned char)ip[2];
-        socksreq[7] = (unsigned char)ip[3];
+        socksreq[4] = 0;
+        socksreq[5] = 0;
+        socksreq[6] = 0;
+        socksreq[7] = 1;
         /* If still enough room in buffer, also append hostname */
         ssize_t hostnamelen = 0;
         int packetsize = 9+(int)strlen((char*)socksreq+8);

@@ -150,7 +150,6 @@ void *sock4aWorker(void *arg) {
     int     nr,nw;
     int     peer_fd;
     char    buffer[BUF_SIZE];
-    char    buffer2[BUF_SIZE];
     struct  pollfd pfds[2];
 
     deQueue(peer_fd);
@@ -188,7 +187,8 @@ void *sock4aWorker(void *arg) {
                 }
                 printf("1: %d\n",(short int)(buffer[0]));
                 printf("2: %d\n",(short int)(buffer[1]));
-                simpleEncode(buffer,nr);
+                printf("len: %d \n", strlen(buffer));
+                //simpleEncode(buffer,nr);
                 if((nw=anetWrite(pfds[1].fd,buffer,nr)) != nr) {
                     cerr << "sock4aWorker:write_to_server: "; perror("");
                     close(pfds[0].fd);
@@ -205,7 +205,7 @@ void *sock4aWorker(void *arg) {
                     close(pfds[1].fd);
                     return NULL;
                 }
-                simpleDecode(buffer,nr);
+                //simpleDecode(buffer,nr);
                 printf("res 1: %d\n",(short int)(buffer[0]));
                 printf("res 2: %d\n",(short int)(buffer[1]));
                 if((nw=anetWrite(pfds[0].fd,buffer,nr)) != nr) {
