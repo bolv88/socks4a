@@ -1,4 +1,4 @@
 socks4a
 =======
 
-c test
+learning c test
