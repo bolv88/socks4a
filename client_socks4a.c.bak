@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
   if (n < 0)
 #endif
     n = HOST_NAME_MAX;
-  sinp = generateSockAddr("0.0.0.0", 21080);
+  sinp = generateSockAddr("127.0.0.1", 21080);
   if ((sockfd = initserver(SOCK_STREAM, (struct sockaddr *) &sinp, sizeof(struct sockaddr), QLEN)) >= 0) {
     //sinp = (struct sockaddr_in *)aip->ai_addr;
     //addrname = inet_ntop(AF_INET, &sinp->sin_addr, abuf, INET_ADDRSTRLEN);
