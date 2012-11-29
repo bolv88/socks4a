@@ -34,6 +34,10 @@ void serve(int sockfd)
   struct  pollfd pfds[2];
 
 
+
+
+  for(;;) {
+
   if ((sockfdS = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     err = errno;
     printf("socket error");
@@ -46,18 +50,15 @@ void serve(int sockfd)
   } else {
      printf("connected to server \n");
   }
-
-
   clfd = accept(sockfd, NULL, NULL);
-  printf("hehe\n");
   //输入
-    pfds[0].fd=clfd;
-    pfds[0].events=POLLIN;
-    pfds[0].revents=0;
+  pfds[0].fd=clfd;
+  pfds[0].events=POLLIN;
+  pfds[0].revents=0;
   //输出
-    pfds[1].fd=sockfdS;
-    pfds[1].events=POLLIN;
-    pfds[1].revents=0;
+  pfds[1].fd=sockfdS;
+  pfds[1].events=POLLIN;
+  pfds[1].revents=0;
 
   for (;;) {
     //clfd = accept(sockfd, NULL, NULL);
@@ -67,47 +68,47 @@ void serve(int sockfd)
         continue;
     }
     
-            if(pfds[0].revents != 0) {
-                if((nr=read(pfds[0].fd,buffer,BUF_SIZE)) <= 0) {
-                    if(nr < 0 ) {
-                        printf( "sock4aWroker:read_from_client: ");
-                    }
-                    close(pfds[0].fd);
-                    close(pfds[1].fd);
-                    return ;
-                }
-                printf("1: %d\n",(short int)(buffer[0]));
-                printf("2: %d\n",(short int)(buffer[1]));
-                printf("len: %d \n", strlen(buffer));
-                //simpleEncode(buffer,nr);
-                if((nw=send(pfds[1].fd,buffer,nr,0)) != nr) {
-                    printf( "sock4aWorker:write_to_server: ");
-                    close(pfds[0].fd);
-                    close(pfds[1].fd);
-                    return ;
-                }
+    if(pfds[0].revents != 0) {
+        if((nr=read(pfds[0].fd,buffer,BUF_SIZE)) <= 0) {
+            if(nr < 0 ) {
+                printf( "sock4aWroker:read_from_client: ");
             }
-            if(pfds[1].revents != 0) {
-                if((nr=read(pfds[1].fd,buffer,BUF_SIZE)) <= 0) {
-                    if(nr < 0 ) {
-                        printf( "sock4aWorker:read_from_server: ");
-                    }
-                    close(pfds[0].fd);
-                    close(pfds[1].fd);
-                    return ;
-                }
-                //simpleDecode(buffer,nr);
-                printf("res 1: %d\n",(short int)(buffer[0]));
-                printf("res 2: %d\n",(short int)(buffer[1]));
-                if((nw=send(pfds[0].fd,buffer,nr, 0)) != nr) {
-                    printf( "sock4aWorker:write_to_client: ");
-                    close(pfds[0].fd);
-                    close(pfds[1].fd);
-                    return ;
-                }
+            close(pfds[0].fd);
+            close(pfds[1].fd);
+            break ;
+        }
+        printf("1: %d\n",(short int)(buffer[0]));
+        printf("2: %d\n",(short int)(buffer[1]));
+        printf("len: %d \n", strlen(buffer));
+        //simpleEncode(buffer,nr);
+        if((nw=send(pfds[1].fd,buffer,nr,0)) != nr) {
+            printf( "sock4aWorker:write_to_server: ");
+            close(pfds[0].fd);
+            close(pfds[1].fd);
+            break ;
+        }
+    }
+    if(pfds[1].revents != 0) {
+        if((nr=read(pfds[1].fd,buffer,BUF_SIZE)) <= 0) {
+            if(nr < 0 ) {
+                printf( "sock4aWorker:read_from_server: ");
             }
-            pfds[0].revents=0;
-            pfds[1].revents=0;
+            close(pfds[0].fd);
+            close(pfds[1].fd);
+            break ;
+        }
+        //simpleDecode(buffer,nr);
+        printf("res 1: %d\n",(short int)(buffer[0]));
+        printf("res 2: %d\n",(short int)(buffer[1]));
+        if((nw=send(pfds[0].fd,buffer,nr, 0)) != nr) {
+            printf( "sock4aWorker:write_to_client: ");
+            close(pfds[0].fd);
+            close(pfds[1].fd);
+            break ;
+        }
+    }
+    pfds[0].revents=0;
+    pfds[1].revents=0;
     /*
     printf("accept  \n");
     if (clfd<0) {
@@ -138,7 +139,8 @@ void serve(int sockfd)
     //
     */
   }
-    close(clfd);
+  }
+  close(clfd);
 
 }
 int main(int argc, char *argv[])
